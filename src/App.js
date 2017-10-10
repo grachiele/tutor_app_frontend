@@ -1,18 +1,33 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './img/SubjecTutor.png';
 import './App.css';
+import { Route, Switch, NavLink, Link } from 'react-router-dom'
+import HomeContainer from './containers/HomeContainer'
+import TutorContainer from './containers/TutorContainer'
+import StudentContainer from './containers/StudentContainer'
+import TutorLogIn from './components/TutorLogIn'
+import StudentLogIn from './components/StudentLogIn'
+import TutorSignUp from './components/TutorSignUp'
+import StudentSignUp from './components/StudentSignUp'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+        <header>
+          <Link to='/'><img src={logo} alt="logo" /></Link>
+          <NavLink to='/'>Home</NavLink>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Switch>
+          <Route exact path='/' render={(props) => <HomeContainer {...props}/>} />
+          <Route exact path='/tutor' render={(props) => <TutorContainer {...props}/>} />
+          <Route exact path='/tutor/login' render={(props) => <TutorLogIn {...props}/>} />
+          <Route exact path='/tutor/signup' render={(props) => <TutorSignUp {...props}/>} />
+          <Route exact path='/student' render={(props) => <StudentContainer {...props}/>} />
+          <Route exact path='/student/login' render={(props) => <StudentLogIn {...props}/>} />
+          <Route exact path='/student/signup' render={(props) => <StudentSignUp {...props}/>} />
+          <Route render={() => <h1>404 Error Not Found</h1>} />
+        </Switch>
       </div>
     );
   }
