@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { postTutor } from '../actions/tutors'
+import { createTutor } from '../actions/tutors'
 
 class TutorSignUp extends React.Component {
 
@@ -34,7 +34,7 @@ class TutorSignUp extends React.Component {
     .then((res) => res.json())
     .then((resJSON) => {
       this.setState({
-        formSubjects: ["", ...resJSON]
+        formSubjects: [...resJSON]
       })
     })
   }
@@ -59,7 +59,7 @@ class TutorSignUp extends React.Component {
 
     handleUsernameChange = (event) => {
       this.setState({
-        username: event.target.value
+        username: event.target.value.toLowerCase()
       })
     }
 
@@ -82,14 +82,21 @@ class TutorSignUp extends React.Component {
     }
 
     handleSubjectsChange = (event) => {
-      this.setState({
-        subjects: event.target.value
-      })
+      // event.target.checked, event.target.value
+      if (event.target.checked) {
+        this.setState({
+          subjects: [...this.state.subjects, event.target.value]
+        }, () => console.log(this.state.subjects))
+      } else {
+        this.setState({
+          subjects: this.state.subjects.filter((subjectId) => subjectId !== event.target.value)
+        }, () => console.log(this.state.subjects))
+      }
     }
 
     handleEmailChange = (event) => {
       this.setState({
-        email: event.target.value
+        email: event.target.value.toLowerCase()
       })
     }
 
@@ -97,14 +104,15 @@ class TutorSignUp extends React.Component {
       event.preventDefault()
       if (this.checkPasswords()) {
         this.props.createTutor({
-          student: {
+          tutor: {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
             username: this.state.username,
             email: this.state.email,
             password: this.state.password,
             location_id: this.state.locations
-          }
+          },
+          subjects: this.state.subjects
         })
       } else {
         alert("Your passwords don't match")
@@ -136,10 +144,10 @@ class TutorSignUp extends React.Component {
           <select onChange={this.handleLocationsChange}>
             {this.state.formLocations ? this.state.formLocations.map((location, index) => <option key={index} value={location.id}>{location.city}</option>) : null}
           </select><br /><br />
-        <label>Subjects: </label>
-          <select onChange={this.handleSubjectsChange}>
-            {this.state.formSubjects ? this.state.formSubjects.map((subject, index) => <option key={index} value={subject.id}>{subject.name}</option>) : null}
-          </select><br /><br />
+          <label>Subjects: </label>
+          <div onChange={this.handleSubjectsChange}>
+            {this.state.formSubjects ? this.state.formSubjects.map((subject, index) => <label key={index}><input key={index} type='checkbox' value={subject.id} />{subject.name}<br /></label>) : null}
+          </div>
           <input type="submit"></input>
         </form>
       </div>
@@ -155,7 +163,7 @@ class TutorSignUp extends React.Component {
 function mapDispatchToProps(dispatch){
   return {
     createTutor: (tutorInfo) => {
-      dispatch(postTutor(tutorInfo))
+      dispatch(createTutor(tutorInfo))
     }
   }
 }

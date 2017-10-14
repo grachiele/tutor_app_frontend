@@ -1,4 +1,4 @@
-function studentsReducer(state = { student: { first_name: "", last_name: "", username: "", email: "", password: "", locations: [], subjects: [] } }, action) {
+function studentsReducer(state = { student: { first_name: "", last_name: "", username: "", email: "", authentication_token: "", locations: [], subjects: [] } }, action) {
   switch (action.type) {
     case "ADD_STUDENT":
       return Object.assign({}, state, {student: {...action.payload}})

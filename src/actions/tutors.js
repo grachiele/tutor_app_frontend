@@ -6,9 +6,9 @@ export function addTutor(TutorInfo){
 }
 
 
-export function postTutor(newTutorInfo) {
+export function createTutor(newTutorInfo) {
   return function(dispatch) {
-    fetch('http://localhost:3000/api/v1/students', {
+    fetch('http://localhost:3000/api/v1/tutors', {
       method: 'post',
       body: JSON.stringify(newTutorInfo),
       headers: {
