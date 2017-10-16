@@ -1,4 +1,6 @@
 import React from 'react'
+import { logInTutor } from '../actions/tutors'
+import { connect } from 'react-redux'
 
 class TutorLogIn extends React.Component {
 
@@ -28,7 +30,7 @@ class TutorLogIn extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault()
     console.log(this.props)
-    this.props.logInStudent({
+    this.props.logInTutor({
       email: this.state.email.toLowerCase(),
       password: this.state.password
     })
@@ -37,7 +39,7 @@ class TutorLogIn extends React.Component {
   render(){
     return(
       <div>
-        <h1>Student Login</h1>
+        <h1>Tutor Login</h1>
         <form onSubmit={this.handleSubmit}>
           <label>E-mail: </label>
           <input type="text" value={this.state.email} onChange={this.handleEmailChange} /><br /><br />
@@ -50,4 +52,12 @@ class TutorLogIn extends React.Component {
   }
 }
 
-export default TutorLogIn
+function mapDispatchToProps(dispatch) {
+  return {
+    logInTutor: (tutorInfo) => {
+      dispatch(logInTutor(tutorInfo))
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(TutorLogIn)

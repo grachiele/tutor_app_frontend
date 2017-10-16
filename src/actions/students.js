@@ -1,6 +1,13 @@
-function addStudent(StudentInfo){
+function createAStudent(StudentInfo){
   return {
-    type: "ADD_STUDENT",
+    type: "CREATE_STUDENT",
+    payload: StudentInfo
+  }
+}
+
+function logInAStudent(StudentInfo){
+  return {
+    type: "LOG_IN_STUDENT",
     payload: StudentInfo
   }
 }
@@ -17,13 +24,17 @@ export function createStudent(newStudentInfo) {
       }
     })
     .then((res) => res.json())
-    .then((resjson) => dispatch(addStudent(resjson)))
+    .then((resjson) => {
+      console.log(resjson)
+      dispatch(createAStudent(resjson.student))
+      localStorage.setItem("student_jwt_token", resjson.jwt_token)
+  })
   }
 }
 
 export function logInStudent(studentInfo) {
   return function(dispatch) {
-    fetch('http://localhost:3000//api/v1/student_sessions', {
+    fetch('http://localhost:3000/api/v1/student_sessions', {
       method: 'post',
       body: JSON.stringify(studentInfo),
       headers: {
@@ -32,6 +43,10 @@ export function logInStudent(studentInfo) {
       }
     }, console.log(JSON.stringify(studentInfo)))
     .then((res) => res.json())
-    .then((resjson) => console.log(resjson))
+    .then((resjson) => {
+      console.log(resjson)
+      dispatch(logInAStudent(resjson.student))
+      localStorage.setItem("student_jwt_token", resjson.jwt_token)
+    })
   }
 }
