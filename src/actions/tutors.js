@@ -26,7 +26,9 @@ export function createTutor(newTutorInfo) {
     .then((res) => res.json())
     .then((resjson) => {
       console.log(resjson)
-      localStorage.setItem("tutor_jwt_token", resjson.jwt_token)
+      if (resjson.jwt_token) {
+        localStorage.setItem("tutor_jwt_token", resjson.jwt_token)
+      }
     })
   }
 }
@@ -44,7 +46,9 @@ export function logInTutor(tutorInfo) {
     .then((res) => res.json())
     .then((resjson) => {
       console.log(resjson)
-      localStorage.setItem("tutor_jwt_token", resjson.jwt_token)
+      if (resjson.jwt_token) {
+        localStorage.setItem("tutor_jwt_token", resjson.jwt_token)
+      }
     })
   }
 }

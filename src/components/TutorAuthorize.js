@@ -1,10 +1,10 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 
-function TutorAuthorize(RenderedComponent) {
+function TutorAuthorize(RenderedComponent, props) {
   return class extends React.Component {
-    constructor(){
-      super()
+    constructor(props){
+      super(props)
     }
 
     render() {
@@ -12,8 +12,10 @@ function TutorAuthorize(RenderedComponent) {
         return <Redirect to="/tutor/login"/>
       } else if (localStorage.getItem('tutor_jwt_token') && (this.props.location.pathname === "/tutor/login" || this.props.location.pathname === '/tutor/signup')){
         return <Redirect to="/tutor" />
+      } else if (localStorage.getItem('student_jwt_token')) {
+        return <Redirect to="/home" />
       } else {
-        return <RenderedComponent />
+        return <RenderedComponent {...this.props}/>
       }
 
     }

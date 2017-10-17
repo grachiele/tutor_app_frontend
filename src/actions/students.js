@@ -27,7 +27,9 @@ export function createStudent(newStudentInfo) {
     .then((resjson) => {
       console.log(resjson)
       dispatch(createAStudent(resjson.student))
-      localStorage.setItem("student_jwt_token", resjson.jwt_token)
+      if (resjson.jwt_token) {
+        localStorage.setItem("student_jwt_token", resjson.jwt_token)
+      }
   })
   }
 }
@@ -44,9 +46,11 @@ export function logInStudent(studentInfo) {
     }, console.log(JSON.stringify(studentInfo)))
     .then((res) => res.json())
     .then((resjson) => {
-      console.log(resjson)
+      if (resjson.jwt_token) {
+        localStorage.setItem("student_jwt_token", resjson.jwt_token)
+      }
       dispatch(logInAStudent(resjson.student))
-      localStorage.setItem("student_jwt_token", resjson.jwt_token)
+
     })
   }
 }

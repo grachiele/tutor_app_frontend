@@ -15,7 +15,7 @@ class StudentContainer extends React.Component {
   render() {
     return(
       <div>
-        <h1>StudentContainer</h1>
+        <h1>Preferences</h1>
         <Student />
       </div>
     )

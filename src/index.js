@@ -11,7 +11,7 @@ import thunk from 'redux-thunk'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-const rootReducer = combineReducers({tutors: tutorsReducer, students: studentsReducer})
+const rootReducer = combineReducers({tutors: tutorsReducer, student: studentsReducer})
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 ReactDOM.render(<Provider store={store}><Router><App /></Router></Provider>, document.getElementById('root'));

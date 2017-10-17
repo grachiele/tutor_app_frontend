@@ -13,8 +13,7 @@ import StudentAuthorize from './components/StudentAuthorize'
 import TutorAuthorize from './components/TutorAuthorize'
 
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-class App extends Component {
+class BeefContainer extends Component {
 
 
   render() {
@@ -39,6 +38,10 @@ class App extends Component {
           <Route exact path='/tutor' render={(props) => <AuthTutorContainer {...props} />} />
           <Route exact path='/student/signup' render={(props) => <AuthStudentSignUp {...props} />} />
           <Route exact path='/student/login' render={(props) => <AuthStudentLogIn {...props} />} />
+
+          <Route path="/student" render={(props) => {
+              return <p>Hello guys</p>
+          }}/>
           <Route exact path='/student' render={(props) => {
               console.log("Rendering Student Container")
               return <AuthStudentContainer {...props} />
@@ -59,5 +62,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(App));
-//
+export default connect(mapStateToProps)(BeefContainer);
