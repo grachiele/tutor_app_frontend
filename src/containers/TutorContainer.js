@@ -24,7 +24,7 @@ class TutorContainer extends React.Component {
     // console.log(this.state)
     return(
       <div>
-        <h1>TutorContainer</h1>
+        <h1>Preferences</h1>
         <Tutor />
       </div>
     )

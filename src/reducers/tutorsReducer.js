@@ -1,9 +1,11 @@
-function tutorsReducer(state={ tutor: {first_name: "", last_name: "", username: "", email: "", authentication_token: "", locations: {}, subjects: [] } }, action) {
+function tutorsReducer(state={ first_name: "", last_name: "", username: "", email: "", locations: {}, students: [], subjects: [], not_selected_students: [], all_subjects: [] }, action) {
   switch (action.type) {
-    case "CREATE_TUTOR":
-      return Object.assign({}, state, {tutor: {...action.payload}})
     case "LOG_IN_TUTOR":
-      return Object.assign({}, state, {tutor: {...action.payload}})
+      return {...action.payload}
+    case "CREATE_TUTOR":
+      return {...action.payload}
+    case "FETCH_TUTOR_INFO":
+      return {...action.payload}
     default:
       return state
   }

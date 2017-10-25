@@ -1,5 +1,4 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
 import { logInStudent } from '../actions/students'
 import { connect } from 'react-redux'
 
@@ -38,7 +37,6 @@ class StudentLogIn extends React.Component {
   }
 
   render(){
-    console.log("Rendering login")
     return(
       <div>
         <h1>Student Login</h1>
@@ -63,11 +61,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(null, mapDispatchToProps)(StudentLogIn)
-
-
-// how do i re render
-// setState({}) // Redux
-// 
-// App -> render
-//  StudentAuthLogin -> render(){}
-//   -> Login Form -> render() {}
