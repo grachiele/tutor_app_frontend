@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, Card, Dropdown, Grid, List } from 'semantic-ui-react'
+import { Button, Card, Dropdown, Form, Grid, List } from 'semantic-ui-react'
 import { removeStudentTutor, updateStudentSubject } from '../actions/students'
 
 
@@ -75,7 +75,7 @@ renderOptionsForSelection() {
 
     return (
         <div>
-          <label>Tutors:</label><br />
+          <h3>Tutors:</h3><br />
           <Grid centered>
             <Grid.Row>
               <Card.Group>
@@ -85,12 +85,17 @@ renderOptionsForSelection() {
           </Grid>
           <br />
           <br />
-          <label>Subjects: </label>
-
-            <form onSubmit={this.handleSubmit}>
-              <Dropdown fluid multiple search selection value={this.state.subjects} options={this.renderOptionsForSelection()} onChange={this.handleChange}/><br />
-              <Button color='teal' type="submit">Update</Button>
-            </form>
+          <h3>Update Subjects</h3>
+          <Grid centered>
+            <Grid.Row>
+              <Grid.Column width={10}>
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Dropdown fluid multiple search selection value={this.state.subjects} label="Subjects" options={this.renderOptionsForSelection()} onChange={this.handleChange}/><br />
+                  <Button color='teal' type="submit">Update</Button>
+                </Form>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </div>
       )
     } else {

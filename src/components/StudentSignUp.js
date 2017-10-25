@@ -16,7 +16,9 @@ class StudentSignUp extends React.Component {
       password: "",
       password_confirm: "",
       location: "",
-      subjects: []
+      subjects: [],
+      formSubjects: [],
+      formLocations: []
     }
   }
 
@@ -64,7 +66,7 @@ class StudentSignUp extends React.Component {
 
   handleUsernameChange = (event) => {
     this.setState({
-      username: event.target.value.toLowerCase()
+      username: event.target.value
     })
   }
 
@@ -80,23 +82,14 @@ class StudentSignUp extends React.Component {
     })
   }
 
-  handleLocationsChange = (event) => {
+  handleLocationsChange = (event, data) => {
+    console.log(data)
     this.setState({
-      locations: event.target.value
+      locations: data.value
     })
   }
 
   handleSubjectsChange = (event, data) => {
-    // event.target.checked, event.target.value
-    // if (event.target.checked) {
-    //   this.setState({
-    //     subjects: [...this.state.subjects, event.target.value]
-    //   }, () => console.log(this.state.subjects))
-    // } else {
-    //   this.setState({
-    //     subjects: this.state.subjects.filter((subjectId) => subjectId !== event.target.value)
-    //   }, () => console.log(this.state.subjects))
-    // }
     console.log(data.value)
     this.setState({
       subjects: data.value
@@ -105,7 +98,7 @@ class StudentSignUp extends React.Component {
 
   handleEmailChange = (event) => {
     this.setState({
-      email: event.target.value.toLowerCase()
+      email: event.target.value
     })
   }
 
@@ -116,8 +109,8 @@ class StudentSignUp extends React.Component {
         student: {
           first_name: this.state.first_name,
           last_name: this.state.last_name,
-          username: this.state.username,
-          email: this.state.email,
+          username: this.state.username.toLowerCase(),
+          email: this.state.email.toLowerCase(),
           password: this.state.password,
           location_id: this.state.locations
         },
@@ -139,16 +132,18 @@ class StudentSignUp extends React.Component {
         <Grid centered>
           <Grid.Row>
             <Grid.Column width={10}>
-              <Form>
+              <Form onSubmit={this.handleSubmit}>
                 <Form.Input label='First Name' type="text" value={this.state.first_name} onChange={this.handleFirstNameChange} />
                 <Form.Input label='Last Name' type="text" value={this.state.last_name} onChange={this.handleLastNameChange} />
                 <Form.Input label='E-mail' type="text" value={this.state.email} onChange={this.handleEmailChange} />
                 <Form.Input label='Username' type="text" value={this.state.username} onChange={this.handleUsernameChange} />
                 <Form.Input label='Password' type="password" value={this.state.password} onChange={this.handlePasswordChange} />
-                <Form.Input label='Password Confirm' type="password" value={this.state.password_confirm} onChange={this.handleEmailChange} />
-                <Form.Dropdown selection label='Locations' placeholder='Choose a Location' options={this.state.formLocations} />
+                <Form.Input label='Password Confirm' type="password" value={this.state.password_confirm} onChange={this.handlePasswordConfirmationChange} />
+                <Form.Dropdown selection label='Locations' placeholder='Choose a Location' options={this.state.formLocations}
+                  onChange={this.handleLocationsChange}/>
                 <Form.Dropdown fluid multiple selection label='Subjects'
                   placeholder='Choose your Subjects' value={this.state.subjects} options={this.state.formSubjects} onChange={this.handleSubjectsChange} />
+                <Form.Button color='teal' type='submit'>Submit</Form.Button>
               </Form>
             </Grid.Column>
           </Grid.Row>
@@ -157,13 +152,6 @@ class StudentSignUp extends React.Component {
     )
   }
 }
-
-
-// function mapStateToProps(state){
-//   return {
-        // state: "something"
-//   }
-// }
 
 function mapDispatchToProps(dispatch){
   return {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createTutor } from '../actions/tutors'
+import { Button, Dropdown, Form, Grid } from 'semantic-ui-react'
 
 class TutorSignUp extends React.Component {
 
@@ -15,7 +16,9 @@ class TutorSignUp extends React.Component {
       password: "",
       password_confirm: "",
       locations: [],
-      subjects: []
+      subjects: [],
+      formSubjects: [],
+      formLocations: []
     }
   }
 
@@ -24,7 +27,9 @@ class TutorSignUp extends React.Component {
     .then((res) => res.json())
     .then((resJSON) => {
       this.setState({
-        formLocations: ["", ...resJSON]
+        formLocations: resJSON.map((location) => {
+          return { key: location.id, value: location.id, text: location.city }
+        })
       })
     })
   }
@@ -34,7 +39,9 @@ class TutorSignUp extends React.Component {
     .then((res) => res.json())
     .then((resJSON) => {
       this.setState({
-        formSubjects: [...resJSON]
+        formSubjects: resJSON.map((subject) => {
+          return {key: subject.id, value: subject.id, text: subject.name }
+        })
       })
     })
   }
@@ -59,7 +66,7 @@ class TutorSignUp extends React.Component {
 
     handleUsernameChange = (event) => {
       this.setState({
-        username: event.target.value.toLowerCase()
+        username: event.target.value
       })
     }
 
@@ -75,28 +82,23 @@ class TutorSignUp extends React.Component {
       })
     }
 
-    handleLocationsChange = (event) => {
+    handleLocationsChange = (event, data) => {
+      console.log(data)
       this.setState({
-        locations: event.target.value
+        locations: data.value
       })
     }
 
-    handleSubjectsChange = (event) => {
-      // event.target.checked, event.target.value
-      if (event.target.checked) {
-        this.setState({
-          subjects: [...this.state.subjects, event.target.value]
-        }, () => console.log(this.state.subjects))
-      } else {
-        this.setState({
-          subjects: this.state.subjects.filter((subjectId) => subjectId !== event.target.value)
-        }, () => console.log(this.state.subjects))
-      }
+    handleSubjectsChange = (event, data) => {
+      console.log(data.value)
+      this.setState({
+        subjects: data.value
+      })
     }
 
     handleEmailChange = (event) => {
       this.setState({
-        email: event.target.value.toLowerCase()
+        email: event.target.value
       })
     }
 
@@ -107,8 +109,8 @@ class TutorSignUp extends React.Component {
           tutor: {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
-            username: this.state.username,
-            email: this.state.email,
+            username: this.state.username.toLowerCase(),
+            email: this.state.email.toLowerCase(),
             password: this.state.password,
             location_id: this.state.locations
           },
@@ -127,38 +129,30 @@ class TutorSignUp extends React.Component {
     return(
       <div>
         <h1>Tutor Sign Up</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>First Name: </label>
-          <input id="first_name" type="text" onChange={this.handleFirstNameChange}></input><br /><br />
-          <label>Last Name: </label>
-          <input id="last_name" type="text" onChange={this.handleLastNameChange}></input><br /><br />
-          <label>Email: </label>
-          <input id="email" type="text" onChange={this.handleEmailChange}></input><br /><br />
-          <label>Username: </label>
-          <input id="username" type="text" onChange={this.handleUsernameChange}></input><br /><br />
-          <label>Password: </label>
-          <input id="password" type="password" onChange={this.handlePasswordChange}></input><br /><br />
-          <label>Confirm Password: </label>
-          <input id="password_confirm" type="password" onChange={this.handlePasswordConfirmationChange}></input><br /><br />
-          <label>Location: </label>
-          <select onChange={this.handleLocationsChange}>
-            {this.state.formLocations ? this.state.formLocations.map((location, index) => <option key={index} value={location.id}>{location.city}</option>) : null}
-          </select><br /><br />
-          <label>Subjects: </label>
-          <div onChange={this.handleSubjectsChange}>
-            {this.state.formSubjects ? this.state.formSubjects.map((subject, index) => <label key={index}><input key={index} type='checkbox' value={subject.id} />{subject.name}<br /></label>) : null}
-          </div>
-          <input type="submit"></input>
-        </form>
+          <Grid centered>
+            <Grid.Row>
+              <Grid.Column width={10}>
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Input label='First Name' type="text" value={this.state.first_name} onChange={this.handleFirstNameChange} />
+                  <Form.Input label='Last Name' type="text" value={this.state.last_name} onChange={this.handleLastNameChange} />
+                  <Form.Input label='E-mail' type="text" value={this.state.email} onChange={this.handleEmailChange} />
+                  <Form.Input label='Username' type="text" value={this.state.username} onChange={this.handleUsernameChange} />
+                  <Form.Input label='Password' type="password" value={this.state.password} onChange={this.handlePasswordChange} />
+                  <Form.Input label='Password Confirm' type="password" value={this.state.password_confirm} onChange={this.handlePasswordConfirmationChange} />
+                  <Form.Dropdown selection label='Locations' placeholder='Choose a Location' options={this.state.formLocations}
+                    onChange={this.handleLocationsChange}/>
+                  <Form.Dropdown fluid multiple selection label='Subjects'
+                    placeholder='Choose your Subjects' value={this.state.subjects} options={this.state.formSubjects} onChange={this.handleSubjectsChange} />
+                  <Form.Button color='teal' type='submit'>Submit</Form.Button>
+                </Form>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
       </div>
     )
   }
 }
 
-// function mapStateToProps(state){
-//   return {
-//   }
-// }
 
 function mapDispatchToProps(dispatch){
   return {
