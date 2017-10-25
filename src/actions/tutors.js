@@ -52,7 +52,6 @@ export function logInTutor(tutorInfo) {
     }, console.log(JSON.stringify(tutorInfo)))
     .then((res) => res.json())
     .then((resjson) => {
-      console.log(resjson)
       if (resjson.jwt_token) {
         localStorage.setItem("tutor_jwt_token", resjson.jwt_token)
       }
@@ -131,7 +130,7 @@ export function updateTutorSubject(subjectIds) {
     }, console.log(JSON.stringify({subject_ids: subjectIds})))
     .then((res) => res.json())
     .then((resjson) => {
-      console.log(resjson)
+      console.log("RESJSON",resjson)
       dispatch(retrieveTutorInfo(jwt_token))
     })
   }

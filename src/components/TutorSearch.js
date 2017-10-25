@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, List, Button, Card, Image, Input, Dropdown } from 'semantic-ui-react'
+import { Button, Card, Dropdown, Grid, Image, Input, List } from 'semantic-ui-react'
 import { createTutorStudent } from '../actions/tutors'
 import { storeSubjectName } from '../actions/subjectNames'
 
@@ -31,7 +31,7 @@ class TutorSearch extends React.Component {
         const subjects = student.subjects.map((subject) => <List.Item key={subject.id}>{subject.name}</List.Item>)
           if (student.subject_names.includes(this.props.subjectName)){
             return (
-              <Card key={student.id}>
+              <Card key={student.id} color='teal' raised>
               <Card.Content>
                 <Card.Header>
                   {`${student.first_name} ${student.last_name}`}
@@ -52,20 +52,22 @@ class TutorSearch extends React.Component {
             )
           }
         })
-      const dropDownOptions = this.props.subjects.map((subject) => <Dropdown.Item onClick={this.handleDropDownClick} key={subject.id} text={subject.name} value={subject.name}/>)
+        const dropDownOptions = this.props.subjects.map((subject) => {
+          return {key: subject.id, value: subject.name, text: subject.name}
+        });
       return (
-        <div>
+        <Grid verticalAlign='middle' centered>
           <h1>Search Students by Subject</h1>
-          <div>
-            <Dropdown placeholder={'Select a Subject'} selection options={dropDownOptions}/>
-          </div>
+          <Grid.Row>
+            <Dropdown onChange={this.handleDropDownClick} placeholder={'Select a Subject'} selection options={dropDownOptions}/>
+          </Grid.Row>
           <br />
-          <Grid centered>
+          <Grid.Row>
               <Card.Group stackable={true}>
                 {loaded}
               </Card.Group>
-          </Grid>
-        </div>
+          </Grid.Row>
+        </Grid>
       )
     } else {
       return null

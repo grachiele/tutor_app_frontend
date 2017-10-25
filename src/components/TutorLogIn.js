@@ -1,6 +1,7 @@
 import React from 'react'
 import { logInTutor } from '../actions/tutors'
 import { connect } from 'react-redux'
+import { Button, Form, Grid } from 'semantic-ui-react'
 
 class TutorLogIn extends React.Component {
 
@@ -40,13 +41,17 @@ class TutorLogIn extends React.Component {
     return(
       <div>
         <h1>Tutor Login</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>E-mail: </label>
-          <input type="text" value={this.state.email} onChange={this.handleEmailChange} /><br /><br />
-          <label>Password: </label>
-          <input type="password" value={this.state.password} onChange={this.handlePasswordChange} /><br /><br />
-          <input type="submit"></input>
-        </form>
+        <Grid centered verticalAlign='middle'>
+          <Grid.Row>
+            <Grid.Column width={10}>
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Input label='E-mail' type='text' value={this.state.email} onChange={this.handleEmailChange}/>
+                <Form.Input label='Password' type='password' value={this.state.password} onChange={this.handlePasswordChange}/>
+                <Button type='submit' color='teal'>Submit</Button>
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     )
   }

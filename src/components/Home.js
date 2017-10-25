@@ -9,11 +9,11 @@ class Home extends React.Component {
       return(
         <div>
             <h1>For Tutors</h1>
-            <Link to="/tutor/login"><Button>Log In</Button></Link>
-            <Link to="/tutor/signup"><Button>Sign Up</Button></Link>
+            <Link to="/tutor/login"><Button color='teal'>Log In</Button></Link>
+            <Link to="/tutor/signup"><Button color='teal'>Sign Up</Button></Link>
             <h1>For Students</h1>
-            <Link to="/student/login"><Button>Log In</Button></Link>
-            <Link to="/student/signup"><Button>Sign Up</Button></Link>
+            <Link to="/student/login"><Button color='teal'>Log In</Button></Link>
+            <Link to="/student/signup"><Button color='teal'>Sign Up</Button></Link>
         </div>
       )
     } else {

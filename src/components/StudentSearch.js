@@ -54,12 +54,15 @@ class StudentSearch extends React.Component {
             )
           }
         })
-      const dropDownOptions = this.props.subjects.map((subject) => <Dropdown.Item onClick={this.handleDropDownClick} key={subject.id} text={subject.name} value={subject.name}/>)
+      const dropDownOptions = this.props.subjects.map((subject) => {
+        return {key: subject.id, value: subject.name, text: subject.name}
+      });
+
       return (
         <div>
           <h1>Search Tutors by Subject</h1>
           <div>
-            <Dropdown placeholder='Select a Subject' selection options={dropDownOptions}/>
+            <Dropdown onChange={this.handleDropDownClick} placeholder='Select a Subject' selection options={dropDownOptions}/>
           </div>
           <br />
           <Grid centered>

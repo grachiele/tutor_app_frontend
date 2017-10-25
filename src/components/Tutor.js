@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, Card, List } from 'semantic-ui-react'
+import { Button, Card, Dropdown, Grid, List } from 'semantic-ui-react'
 import { removeTutorStudent, updateTutorSubject } from '../actions/tutors'
 
 class Tutor extends React.Component {
@@ -17,18 +17,14 @@ class Tutor extends React.Component {
     event.preventDefault()
     const subject_ids = this.state.subjects
     this.props.updateSubjects(subject_ids)
+    alert("Preferences Updated!")
   }
 
-  handleCheckboxClick = (event) => {
-    if (event.target.checked && !this.state.subjects.includes(event.target.value)){
-      this.setState({
-        subjects: [...this.state.subjects, parseInt(event.target.value)]
-      })
-    } else {
-      this.setState({
-        subjects: this.state.subjects.filter((subject) => parseInt(event.target.value) !== subject)
-      })
-    }
+
+  renderOptionsForSelection() {
+    return this.props.allSubjects.map((subject) => {
+      return {key: subject.id, value: subject.id, text: subject.name }
+    })
   }
 
   handleButtonClick = (event) => {
@@ -37,22 +33,10 @@ class Tutor extends React.Component {
     this.props.removeAssociation(studentId)
   }
 
-  renderCheckBoxes() {
-    const tutor_subjects = this.props.tutor.subjects.map((subject) => subject.name)
-    console.log(tutor_subjects)
-    if (this.props.allSubjects) {
-      console.log(this.props.allSubjects)
-      return (
-        this.props.allSubjects.map((subject) => {
-          if (tutor_subjects.includes(subject.name)){
-            return (<label key={subject.id}><input key={subject.id} defaultChecked={true} type='checkbox' value={subject.id} onChange={this.handleCheckboxClick}/>{subject.name}<br /></label>)
-        } else {
-          return (<label key={subject.id}><input key={subject.id} defaultChecked={false} type='checkbox' value={subject.id} onChange={this.handleCheckboxClick}/>{subject.name}<br /></label>)
-        }
-        })
-      )
-    }
-    return null
+  handleChange = (event, data) => {
+    this.setState({
+      subjects: data.value
+    })
   }
 
   render() {
@@ -65,7 +49,7 @@ class Tutor extends React.Component {
       const students = this.props.tutor.students.map((student) => {
         const subjects = student.subjects.map((subject) => <List.Item key={subject.id}>{subject.name}</List.Item>)
         return (
-          <Card key={student.id}>
+          <Card key={student.id} color='teal'>
             <Card.Content>
               <Card.Header>
                 {`${student.first_name} ${student.last_name}`}
@@ -88,20 +72,23 @@ class Tutor extends React.Component {
     )
     return (
           <div>
-            <div>
-              <label>Students:</label><br />
-              <Card.Group>
-                {students}
-              </Card.Group>
-            </div>
-          <form onSubmit={this.handleSubmit}>
+            <label>Students:</label><br />
+            <Grid centered>
+              <Grid.Row>
+                <Card.Group>
+                  {students}
+                </Card.Group>
+              </Grid.Row>
+            </Grid>
+            <br />
+            <br />
             <label>Subjects: </label>
-            <div onChange={this.handleSubjectsChange}>
-              {this.renderCheckBoxes()}
-            </div>
-            <button type="submit">Update</button>
-          </form>
-        </div>
+
+              <form onSubmit={this.handleSubmit} success>
+                <Dropdown fluid multiple selection value={this.state.subjects} options={this.renderOptionsForSelection()} onChange={this.handleChange} /><br />
+                <Button color='teal' type="submit">Update</Button>
+              </form>
+          </div>
       )
     } else {
       return null
