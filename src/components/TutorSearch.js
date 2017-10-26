@@ -22,12 +22,14 @@ class TutorSearch extends React.Component {
   }
 
   render(){
+
     if (this.props.fetching && !this.props.tutor && !this.props.students) {
       return (
         <div className="ui active loader"></div>
       )
     } else if (this.props.students && this.props.tutor){
       const loaded = this.props.tutor.not_selected_students.map((student) => {
+        const zipcode = `https://www.google.com/maps/embed/v1/place?key=AIzaSyCNUIlhwaQ4xLbNM5Qs2of7wx7pcw8yjaM&q=${student.location.zipcode}`
         const subjects = student.subjects.map((subject) => <List.Item key={subject.id}>{subject.name}</List.Item>)
           if (student.subject_names.includes(this.props.subjectName)){
             return (
@@ -37,6 +39,7 @@ class TutorSearch extends React.Component {
                   {`${student.first_name} ${student.last_name}`}
                 </Card.Header>
                 <Card.Meta>
+                  {`from ${student.location.city}, ${student.location.state}`}<br />
                   is looking for tutoring in:
                 </Card.Meta>
                 <Card.Description>
@@ -46,7 +49,8 @@ class TutorSearch extends React.Component {
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
-                  <Button value={student.id} onClick={this.handleButtonClick} positive>Add</Button>
+                <iframe title="map" width="250" height="200" src={zipcode}></iframe><br />
+                <Button value={student.id} onClick={this.handleButtonClick} positive>Add</Button>
               </Card.Content>
             </Card>
             )

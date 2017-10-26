@@ -28,13 +28,13 @@ class App extends Component {
     const student_jwt_token = localStorage.getItem('student_jwt_token')
     if (student_jwt_token) {
       props.retrieveStudentInfo(student_jwt_token)
+      props.getTutors()
     }
     if (tutor_jwt_token) {
       props.retrieveTutorInfo(tutor_jwt_token)
+      props.getStudents()
     }
     props.getSubjects()
-    props.getStudents()
-    props.getTutors()
   }
 
   render() {

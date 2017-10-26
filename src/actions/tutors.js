@@ -55,6 +55,7 @@ export function logInTutor(tutorInfo) {
       if (resjson.jwt_token) {
         localStorage.setItem("tutor_jwt_token", resjson.jwt_token)
       }
+      console.log("TUTOR RESJSON", resjson)
       dispatch(logInATutor(resjson.tutor))
     })
   }
@@ -70,7 +71,7 @@ export function retrieveTutorInfo(jwt_token){
     })
     .then((res) => res.json())
     .then((resjson) => {
-      console.log(resjson)
+      console.log("RESJSON", resjson)
       return dispatch(fetchTutorInfo(resjson))
     })
   }
