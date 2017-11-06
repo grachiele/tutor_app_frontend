@@ -49,6 +49,7 @@ renderOptionsForSelection() {
       )
     } else if (this.props.student){
       const tutors = this.props.student.tutors.map((tutor) => {
+        const zipcode = `https://www.google.com/maps/embed/v1/place?key=AIzaSyCNUIlhwaQ4xLbNM5Qs2of7wx7pcw8yjaM&q=${tutor.location.zipcode}`
         const subjects = tutor.subjects.map((subject) => <List.Item key={subject.id}>{subject.name}</List.Item>)
         return (
           <Card key={tutor.id} color='teal'>
@@ -57,6 +58,7 @@ renderOptionsForSelection() {
                 {`${tutor.first_name} ${tutor.last_name}`}
               </Card.Header>
               <Card.Meta>
+                {`from ${tutor.location.city}, ${tutor.location.state}`}<br />
                 contact them at <a href={`mailto:${tutor.email}`} target="_top">{tutor.email}</a>
               </Card.Meta>
               <Card.Description>
@@ -66,7 +68,8 @@ renderOptionsForSelection() {
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
-                <Button key={tutor.id} value={tutor.id} onClick={this.handleButtonClick} negative>Remove</Button>
+              <iframe title="map" width="250" height="200" src={zipcode}></iframe><br />
+              <Button key={tutor.id} value={tutor.id} onClick={this.handleButtonClick} negative>Remove</Button>
             </Card.Content>
         </Card>
       )

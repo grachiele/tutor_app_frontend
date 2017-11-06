@@ -22,17 +22,6 @@ class TutorSignUp extends React.Component {
     }
   }
 
-  getLocations = () => {
-    return fetch('http://localhost:3000/api/v1/locations')
-    .then((res) => res.json())
-    .then((resJSON) => {
-      this.setState({
-        formLocations: resJSON.map((location) => {
-          return { key: location.id, value: location.id, text: location.city }
-        })
-      })
-    })
-  }
 
   getSubjects = () => {
     return fetch('http://localhost:3000/api/v1/subjects')
@@ -47,7 +36,6 @@ class TutorSignUp extends React.Component {
   }
 
   componentDidMount() {
-    this.getLocations()
     this.getSubjects()
   }
 
@@ -83,7 +71,7 @@ class TutorSignUp extends React.Component {
     }
 
     handleLocationsChange = (event, data) => {
-      console.log(data)
+      console.log(data.value)
       this.setState({
         locations: data.value
       })
@@ -139,8 +127,7 @@ class TutorSignUp extends React.Component {
                   <Form.Input label='Username' type="text" value={this.state.username} onChange={this.handleUsernameChange} />
                   <Form.Input label='Password' type="password" value={this.state.password} onChange={this.handlePasswordChange} />
                   <Form.Input label='Password Confirm' type="password" value={this.state.password_confirm} onChange={this.handlePasswordConfirmationChange} />
-                  <Form.Dropdown selection label='Locations' placeholder='Choose a Location' options={this.state.formLocations}
-                    onChange={this.handleLocationsChange}/>
+                  <Form.Input label='Zipcode' onChange={this.handleLocationsChange}/>
                   <Form.Dropdown fluid multiple selection label='Subjects'
                     placeholder='Choose your Subjects' value={this.state.subjects} options={this.state.formSubjects} onChange={this.handleSubjectsChange} />
                   <Form.Button color='teal' type='submit'>Submit</Form.Button>

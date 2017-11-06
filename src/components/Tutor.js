@@ -47,6 +47,7 @@ class Tutor extends React.Component {
       )
     } else if (this.props.tutor){
       const students = this.props.tutor.students.map((student) => {
+        const zipcode =`https://www.google.com/maps/embed/v1/place?key=AIzaSyCNUIlhwaQ4xLbNM5Qs2of7wx7pcw8yjaM&q=${student.location.zipcode}`
         const subjects = student.subjects.map((subject) => <List.Item key={subject.id}>{subject.name}</List.Item>)
         return (
           <Card key={student.id} color='teal'>
@@ -55,6 +56,7 @@ class Tutor extends React.Component {
                 {`${student.first_name} ${student.last_name}`}
               </Card.Header>
               <Card.Meta>
+                {`from ${student.location.city}, ${student.location.state}`}<br />
                 contact them at <a href={`mailto:${student.email}`} target="_top">{student.email}</a>
               </Card.Meta>
               <Card.Description>
@@ -64,7 +66,8 @@ class Tutor extends React.Component {
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
-                <Button key={student.id} value={student.id} onClick={this.handleButtonClick} negative>Remove</Button>
+              <iframe title="map" width="250" height="200" src={zipcode}></iframe><br />
+              <Button key={student.id} value={student.id} onClick={this.handleButtonClick} negative>Remove</Button>
             </Card.Content>
         </Card>
       )

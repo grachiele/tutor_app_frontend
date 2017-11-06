@@ -5,8 +5,8 @@ import { createStudentTutor } from '../actions/students'
 import { storeSubjectName } from '../actions/subjectNames'
 
 class StudentSearch extends React.Component {
+  
   constructor(props) {
-    console.log("Mounting")
     super(props)
 
   }
@@ -30,6 +30,7 @@ class StudentSearch extends React.Component {
       )
     } else if (this.props.tutors && this.props.student){
       const loaded = this.props.student.not_selected_tutors.map((tutor) => {
+        const zipcode = `https://www.google.com/maps/embed/v1/place?key=AIzaSyCNUIlhwaQ4xLbNM5Qs2of7wx7pcw8yjaM&q=${tutor.location.zipcode}`
         const subjects = tutor.subjects.map((subject) => <List.Item key={subject.id}>{subject.name}</List.Item>)
           if (tutor.subject_names.includes(this.props.subjectName) && this.props.student.tutors.includes(tutor) === false){
             return (
@@ -39,6 +40,7 @@ class StudentSearch extends React.Component {
                   {`${tutor.first_name} ${tutor.last_name}`}
                 </Card.Header>
                 <Card.Meta>
+                  {`from ${tutor.location.city}, ${tutor.location.state}`}<br />
                   is looking to tutor in:
                 </Card.Meta>
                 <Card.Description>
@@ -48,7 +50,8 @@ class StudentSearch extends React.Component {
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
-                  <Button value={tutor.id} onClick={this.handleButtonClick} positive>Add</Button>
+                <iframe title="map" width="250" height="200" src={zipcode}></iframe><br />
+                <Button value={tutor.id} onClick={this.handleButtonClick} positive>Add</Button>
               </Card.Content>
             </Card>
             )
@@ -66,7 +69,7 @@ class StudentSearch extends React.Component {
           </div>
           <br />
           <Grid centered>
-              <Card.Group stackable={true}>
+              <Card.Group>
                 {loaded}
               </Card.Group>
           </Grid>

@@ -56,6 +56,7 @@ export function logInStudent(studentInfo) {
       if (resjson.jwt_token) {
         localStorage.setItem("student_jwt_token", resjson.jwt_token)
       }
+      console.log("STUDENT RESJSON", resjson)
       dispatch(logInAStudent(resjson.student))
 
     })

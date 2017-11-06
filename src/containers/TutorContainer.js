@@ -11,17 +11,7 @@ class TutorContainer extends React.Component {
     }
   }
 
-  // componentWillMount(){
-  //   fetch('http://localhost:3000/api/v1/tutors')
-  //   .then((res) => res.json())
-  //   .then((json) => this.setState({
-  //     tutors: [...json]
-  //   })
-  //   )
-  // }
-
   render() {
-    // console.log(this.state)
     return(
       <div>
         <h1>Preferences</h1>
