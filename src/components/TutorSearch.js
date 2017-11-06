@@ -28,6 +28,7 @@ class TutorSearch extends React.Component {
         <div className="ui active loader"></div>
       )
     } else if (this.props.students && this.props.tutor){
+      console.log("THIS IS TRUE")
       const loaded = this.props.tutor.not_selected_students.map((student) => {
         const zipcode = `https://www.google.com/maps/embed/v1/place?key=AIzaSyCNUIlhwaQ4xLbNM5Qs2of7wx7pcw8yjaM&q=${student.location.zipcode}`
         const subjects = student.subjects.map((subject) => <List.Item key={subject.id}>{subject.name}</List.Item>)

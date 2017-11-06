@@ -5,8 +5,8 @@ import { createStudentTutor } from '../actions/students'
 import { storeSubjectName } from '../actions/subjectNames'
 
 class StudentSearch extends React.Component {
+  
   constructor(props) {
-    console.log("Mounting")
     super(props)
 
   }
@@ -30,7 +30,6 @@ class StudentSearch extends React.Component {
       )
     } else if (this.props.tutors && this.props.student){
       const loaded = this.props.student.not_selected_tutors.map((tutor) => {
-        console.log("TUTOR", tutor)
         const zipcode = `https://www.google.com/maps/embed/v1/place?key=AIzaSyCNUIlhwaQ4xLbNM5Qs2of7wx7pcw8yjaM&q=${tutor.location.zipcode}`
         const subjects = tutor.subjects.map((subject) => <List.Item key={subject.id}>{subject.name}</List.Item>)
           if (tutor.subject_names.includes(this.props.subjectName) && this.props.student.tutors.includes(tutor) === false){
