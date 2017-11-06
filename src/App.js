@@ -65,7 +65,7 @@ class App extends Component {
           <Route exact path='/student' render={(props) => <AuthStudentContainer {...props} />} />
           <Route render={(props) => <HomeContainer {...props}/>} />
         </Switch>
-      </div>
+      </div> 
     );
   }
 }
