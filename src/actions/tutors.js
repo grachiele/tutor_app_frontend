@@ -32,6 +32,7 @@ export function createTutor(newTutorInfo) {
     })
     .then((res) => res.json())
     .then((resjson) => {
+      console.log('RESJSON', resjson)
       if (resjson.jwt_token) {
         localStorage.setItem("tutor_jwt_token", resjson.jwt_token)
       }

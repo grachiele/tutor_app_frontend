@@ -24,6 +24,7 @@ class TutorSearch extends React.Component {
   render(){
 
     if (this.props.fetching && !this.props.tutor && !this.props.students) {
+      console.log("This is where it's hitting")
       return (
         <div className="ui active loader"></div>
       )
@@ -75,6 +76,7 @@ class TutorSearch extends React.Component {
         </Grid>
       )
     } else {
+      console.log("Actually here")
       return null
     }
   }

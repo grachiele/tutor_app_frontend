@@ -5,7 +5,7 @@ function tutorsReducer(state={ first_name: "", last_name: "", username: "", emai
     case "CREATE_TUTOR":
       return {...action.payload}
     case "FETCH_TUTOR_INFO":
-      return {...action.payload}
+      return Object.assign({}, state, {...action.payload})
     default:
       return state
   }
